@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream text-ink antialiased;
+}
+
+::selection {
+  background: #e8d5a3;
+  color: #122033;
+}
+
+.rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #b8954a, transparent);
+}
+
+.ornament {
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+}

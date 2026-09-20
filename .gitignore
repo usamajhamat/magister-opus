@@ -24,7 +24,6 @@
 Thumbs.db
 
 # env
-.env
 .env*.local
 
 # debug
@@ -41,3 +40,4 @@ yarn-error.log*
 /prisma/*.db
 /uploads
 /public/generated
+config.bat

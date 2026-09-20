@@ -1,6 +1,6 @@
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
-import { adminEmail, adminPassword, authSecret } from "@/lib/env";
+import { adminEmail, adminPassword, appUrl, authSecret } from "@/lib/env";
 
 const ADMIN_COOKIE = "mo_admin";
 const STUDENT_COOKIE = "mo_student";
@@ -11,6 +11,10 @@ type StudentClaims = { role: "student"; email: string };
 
 function secretKey() {
   return new TextEncoder().encode(authSecret());
+}
+
+function cookieSecure(): boolean {
+  return appUrl().startsWith("https://");
 }
 
 async function sign(payload: AdminClaims | StudentClaims, days = 7): Promise<string> {
@@ -43,7 +47,7 @@ export async function setAdminSession(email: string) {
   jar.set(ADMIN_COOKIE, token, {
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: cookieSecure(),
     path: "/",
     maxAge: WEEK,
   });
@@ -55,7 +59,7 @@ export async function setStudentSession(email: string) {
   jar.set(STUDENT_COOKIE, token, {
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: cookieSecure(),
     path: "/",
     maxAge: WEEK,
   });
